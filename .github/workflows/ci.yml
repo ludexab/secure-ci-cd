@@ -32,4 +32,23 @@ jobs:
           source venv/bin/activate
           python -m unittest discover
 
- 
+	security_scan:
+		runs-on: ubuntu-latest
+		needs: build
+
+		steps:
+		  - name: Checkout Code
+		    uses: actions/checkout@v3
+
+		  - name: Install Dependencies
+		    run: |
+		      source venv/bin/activate
+		      pip install bandit safety
+
+		  - name: Run Bandit (Python Security Scanner)
+		    run: bandit -r .
+
+		  - name: Run Safety (Dependency Vulnerability Scanner)
+		    run: |
+		      pip install safety
+		      safety check --full-report || true
