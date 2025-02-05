@@ -31,6 +31,10 @@ jobs:
         run: |
           source venv/bin/activate
           python -m unittest discover
-          pip install safety
-          pip install bandit
-          safety check --full-report || true
+
+      - name: Run Vulnerability Scans
+        run: |
+          source venv/bin/activate
+          pip install safety bandit
+          bandit app.py
+          safety scan
