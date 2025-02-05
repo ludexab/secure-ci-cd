@@ -31,6 +31,6 @@ jobs:
         run: |
           source venv/bin/activate
           python -m unittest discover
-		      pip install safety
-		      pip install bandit
-		      safety check --full-report || true
+          pip install safety
+          pip install bandit
+          safety check --full-report || true
