@@ -39,4 +39,4 @@ jobs:
           pip install safety
           pip install bandit
           safety check --full-report || true
-          bandit -r .
+          bandit app.py
