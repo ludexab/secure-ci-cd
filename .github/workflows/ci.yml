@@ -36,10 +36,10 @@ jobs:
         run: |
           source venv/bin/activate
           pip install bandit
-          bandit app.py
+          bandit -r ./app.py
 
       - name: Run Safety Scans
         run: |
           source venv/bin/activate
           pip install safety
-          safety check --full-report || true
+          safety scan
