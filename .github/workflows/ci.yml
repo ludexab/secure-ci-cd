@@ -36,7 +36,7 @@ jobs:
         run: |
           source venv/bin/activate
           pip install bandit
-          bandit -r ./app.py
+          bandit -r .
 
       - name: Run Safety Scans
         run: |
