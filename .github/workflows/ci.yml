@@ -1,48 +1,51 @@
 name: Secure CI/CD Pipeline
 
 on:
-	push:
-		branches:
-			- main
-	pull_request:
-		branches:
-			- main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-	build:
-		runs-on: ubuntu-latest
-		steps:
-			- name: Checkout Code
-			  uses: actions/checkout@v3
+  build:
+    runs-on: ubuntu-latest
 
-			- name: Set up Python
-			  uses: actions/setup-python@v4
-			  with:
-			  	python-version: "3.10"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-			- name: Install Dependencies
-			  run: |
-				python -m venv venv
-				source venv/bin/activate
-				pip install -r requirements.txt
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-			- name: Run Tests
-			  run: |
-				source venv/bin/activate
-				python -m unittest discover
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
 
-security_scan:
-	runs-on: ubuntu-latest
-	needs: build
-	steps:
-		- name: Checkout Code
-		  uses: actions/checkout@v3
+      - name: Run Tests
+        run: |
+          source venv/bin/activate
+          python -m unittest discover
 
-		- name: Run Bandit (Python Security Scanner)
-		  uses: tj-actions/bandit@v1
-		  with:
-			target: "app.py"
+  security_scan:
+    runs-on: ubuntu-latest
+    needs: build
 
-		- name: Run Safety (Dependency Vulnerability Scanner)
-		  run: |
-			pip install safety
-			safety check --full-report
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Bandit (Python Security Scanner)
+        uses: tj-actions/bandit@v1
+        with:
+          target: "app.py"
+
+      - name: Run Safety (Dependency Vulnerability Scanner)
+        run: |
+          pip install safety
+          safety check --full-report
