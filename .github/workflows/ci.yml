@@ -32,14 +32,14 @@ jobs:
           source venv/bin/activate
           python -m unittest discover
 
-      - name: Run Bandit Scans
-        run: |
-          source venv/bin/activate
-          pip install bandit
-          bandit -r .
-
       - name: Run Safety Scans
         run: |
           source venv/bin/activate
           pip install safety
           safety scan
+
+      - name: Run Bandit Scans
+        run: |
+          source venv/bin/activate
+          pip install bandit
+          bandit -r .
