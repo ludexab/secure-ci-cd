@@ -34,12 +34,16 @@ jobs:
 
 		  - name: Install Vulnerability Scanners
 		    run: |
-		      pip install bandit safety
+					source venv/bin/activate
+		      pip install bandit
 
 		  - name: Run Bandit (Python Security Scanner)
-		    run: bandit -r .
+		    run: |
+					source venv/bin/activate					
+					bandit -r .
 
 		  - name: Run Safety (Dependency Vulnerability Scanner)
 		    run: |
+					source venv/bin/activate
 		      pip install safety
 		      safety check --full-report || true
