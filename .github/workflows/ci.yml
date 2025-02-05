@@ -33,3 +33,9 @@ jobs:
           pip install safety
           pip install bandit
           safety check --full-report || true
+      - name: Run Scans
+        run: |
+          source venv/bin/activate
+          pip install safety
+          pip install bandit
+          safety check --full-report || true
